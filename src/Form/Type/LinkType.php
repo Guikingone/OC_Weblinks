@@ -11,7 +11,8 @@ class LinkType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('content', 'textarea');
+        $builder->add('url', 'textarea');
+        $builder->add('title', 'text');
     }
 
     public function getName()

@@ -51,6 +51,15 @@ class UserDAO extends DAO implements UserProviderInterface
     }
 
     /**
+     * Removes an user from the database.
+     *
+     * @param integer $id The user id.
+     */
+    public function delete($id) {
+        $this->getDb()->delete('t_user', array('user_id' => $id));
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function loadUserByUsername($username)

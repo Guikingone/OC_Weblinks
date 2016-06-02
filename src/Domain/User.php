@@ -1,6 +1,6 @@
 <?php
 
-namespace Weblinks\Domain;
+namespace WebLinks\Domain;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 

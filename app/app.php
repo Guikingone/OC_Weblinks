@@ -2,6 +2,7 @@
 
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
+use Symfony\Component\HttpFoundation\Request;
 
 // Register global error and exception handlers
 ErrorHandler::register();
@@ -17,8 +18,8 @@ $app['twig'] = $app->share($app->extend('twig', function(Twig_Environment $twig,
     return $twig;
 }));
 $app->register(new Silex\Provider\ValidatorServiceProvider());
-$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider());
+$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.firewalls' => array(
         'secured' => array(
@@ -26,7 +27,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
             'anonymous' => true,
             'logout' => true,
             'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
-            'users' =>$app->share(function () use ($app){
+            'users' => $app->share(function () use ($app) {
                 return new WebLinks\DAO\UserDAO($app['db']);
             }),
         ),
@@ -37,6 +38,13 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.access_rules' => array(
         array('^/admin', 'ROLE_ADMIN'),
     ),
+));
+$app->register(new Silex\Provider\FormServiceProvider());
+$app->register(new Silex\Provider\TranslationServiceProvider());
+$app->register(new Silex\Provider\MonologServiceProvider(), array(
+    'monolog.logfile' => __DIR__.'/../var/logs/weblinks.log',
+    'monolog.name' => 'WebLinks',
+    'monolog.level' => $app['monolog.level']
 ));
 
 // Register services

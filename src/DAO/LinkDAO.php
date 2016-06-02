@@ -25,7 +25,7 @@ class LinkDAO extends DAO
      * @return array A list of all links.
      */
     public function findAll() {
-        $sql = "select * from t_link order by link_id desc";
+        $sql = "SELECT * FROM t_link ORDER BY link_id DESC";
         $result = $this->getDb()->fetchAll($sql);
         
         // Convert query result to an array of domain objects
@@ -42,7 +42,7 @@ class LinkDAO extends DAO
      *
      * @param integer $id The link id.
      *
-     * @return \Weblinks\Domain\Link|throws an exception if no link article is found
+     * @return \WebLinks\Domain\Link | throws an exception if no link article is found
      */
     public function find($id) {
         $sql = "select * from t_link where link_id = ?";
