@@ -29,7 +29,7 @@ class UserDAO extends DAO implements UserProviderInterface
         // Convert query result to an array of domain objects
         $entities = array();
         foreach ($result as $row) {
-            $id = $row['usr_id'];
+            $id = $row['user_id'];
             $entities[$id] = $this->buildDomainObject($row);
         }
         return $entities;

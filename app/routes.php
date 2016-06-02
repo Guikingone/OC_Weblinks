@@ -110,8 +110,6 @@ $app->match('/admin/user/{id}/edit', function($id, Request $request) use ($app) 
 
 // Remove a user
 $app->get('/admin/user/{id}/delete', function($id, Request $request) use ($app) {
-    // Delete all associated comments
-    $app['dao.comment']->deleteAllByUser($id);
     // Delete the user
     $app['dao.user']->delete($id);
     $app['session']->getFlashBag()->add('success', 'The user was succesfully removed.');

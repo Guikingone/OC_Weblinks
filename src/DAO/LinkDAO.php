@@ -38,6 +38,23 @@ class LinkDAO extends DAO
     }
 
     /**
+     * Returns a link matching the supplied id.
+     *
+     * @param integer $id The link id.
+     *
+     * @return \Weblinks\Domain\Link|throws an exception if no link article is found
+     */
+    public function find($id) {
+        $sql = "select * from t_link where link_id = ?";
+        $row = $this->getDb()->fetchAssoc($sql, array($id));
+
+        if ($row)
+            return $this->buildDomainObject($row);
+        else
+            throw new \Exception("No link matching id " . $id);
+    }
+
+    /**
      * Creates an Link object based on a DB row.
      *
      * @param array $row The DB row containing Link data.
