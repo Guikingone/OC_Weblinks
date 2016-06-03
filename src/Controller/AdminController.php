@@ -35,6 +35,8 @@ class AdminController {
         $linkForm = $app['form.factory']->create(new LinkType(), $link);
         $linkForm->handleRequest($request);
         if ($linkForm->isSubmitted() && $linkForm->isValid()) {
+            $user = $app['security']->getToken()->getUser();
+            $link->setAuthor($user);
             $app['dao.link']->save($link);
             $app['session']->getFlashBag()->add('success', 'The link was successfully created.');
         }
@@ -55,6 +57,8 @@ class AdminController {
         $linkForm = $app['form.factory']->create(new LinkType(), $link);
         $linkForm->handleRequest($request);
         if ($linkForm->isSubmitted() && $linkForm->isValid()) {
+            $user = $app['security']->getToken()->getUser();
+            $link->setAuthor($user);
             $app['dao.link']->save($link);
             $app['session']->getFlashBag()->add('success', 'The link was successfully created.');
         }

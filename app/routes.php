@@ -41,7 +41,7 @@ $app->match('/admin/user/add', "WebLinks\Controller\AdminController::addUserActi
 $app->match('/admin/user/{id}/edit', "WebLinks\Controller\AdminController::editUserAction")->bind('admin_user_edit');
 
 // Remove a user
-$app->get('/admin/user/{id}/delete', "WebLins\Controller\AdminController::deleteUserAction")->bind('admin_user_delete');
+$app->get('/admin/user/{id}/delete', "WebLinks\Controller\AdminController::deleteUserAction")->bind('admin_user_delete');
 
 // API : get all links
 $app->get('/api/links', "WebLinks\Controller\ApiController::getLinksAction")->bind('api_links');
