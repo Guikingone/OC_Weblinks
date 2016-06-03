@@ -2,6 +2,7 @@
 
 namespace WebLinks\DAO;
 
+use Silex\Application;
 use WebLinks\Domain\Link;
 
 class LinkDAO extends DAO 

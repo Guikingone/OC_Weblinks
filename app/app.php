@@ -2,7 +2,6 @@
 
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
-use Symfony\Component\HttpFoundation\Request;
 
 // Register global error and exception handlers
 ErrorHandler::register();
@@ -37,6 +36,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     ),
     'security.access_rules' => array(
         array('^/admin', 'ROLE_ADMIN'),
+        array('^/submit', 'ROLE_USER'),
     ),
 ));
 $app->register(new Silex\Provider\FormServiceProvider());

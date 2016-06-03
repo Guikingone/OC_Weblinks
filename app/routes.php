@@ -16,6 +16,9 @@ $app->get('/', "WebLinks\Controller\HomeController::indexAction")->bind('home');
 // Detailed info about a link
 $app->match('/link/{id}', "WebLinks\Controller\HomeController::linkAction")->bind('link');
 
+// Submit a link
+$app->match('/submit', "WebLinks\Controller\AdminController::submitLinkAction")->bind('link_submit');
+
 // Login form
 $app->get('/login', "WebLinks\Controller\HomeController::loginAction")->bind('login');
 
