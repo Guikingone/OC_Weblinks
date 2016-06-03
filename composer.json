@@ -1,4 +1,6 @@
 {
+    "name": "silex/oc-weblinks",
+    "description": "A simple silex project",
     "require": {
         "silex/silex": "~1.2",
         "doctrine/dbal": "~2.4",

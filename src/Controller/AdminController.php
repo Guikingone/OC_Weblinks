@@ -34,7 +34,7 @@ class AdminController {
         $linkForm->handleRequest($request);
         if ($linkForm->isSubmitted() && $linkForm->isValid()) {
             $app['dao.link']->save($link);
-            $app['session']->getFlashBag()->add('success', 'The article was successfully created.');
+            $app['session']->getFlashBag()->add('success', 'The link was successfully created.');
         }
         return $app['twig']->render('link_form.html.twig', array(
             'title' => 'New Link',
@@ -54,7 +54,7 @@ class AdminController {
         $linkForm->handleRequest($request);
         if ($linkForm->isSubmitted() && $linkForm->isValid()) {
             $app['dao.article']->save($link);
-            $app['session']->getFlashBag()->add('success', 'The article was succesfully updated.');
+            $app['session']->getFlashBag()->add('success', 'The link was succesfully updated.');
         }
         return $app['twig']->render('link_form.html.twig', array(
             'title' => 'Edit link',
