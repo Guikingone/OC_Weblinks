@@ -63,4 +63,12 @@ class Link
     {
         $this->author = $author;
     }
+
+    /**
+     * @return User
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
 }

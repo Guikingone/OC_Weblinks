@@ -1,4 +1,14 @@
 <?php
+/**
+ *  This file is a part of the routing module of the WebLinks Application, the content created here is purely optionnal
+ *  and depend on the need of the user, in order to add a new route, start by call the method followed by the prefix,
+ *  the namespace of the controller and finally the Action, the bind part let the user use the path() method on the views.
+ *
+ *  Created By Guillaume Loulier <guillaume.loulier[at]hotmail.fr
+ *
+ *  Last update the 03/06/2016
+ */
+
 
 // Home page
 $app->get('/', "WebLinks\Controller\HomeController::indexAction")->bind('home');

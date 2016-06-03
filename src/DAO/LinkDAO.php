@@ -82,10 +82,11 @@ class LinkDAO extends DAO
         $linkData = array(
             'link_title' => $link->getTitle(),
             'link_url' => $link->getUrl(),
+            'user_id' => $link->getAuthor()->getId()
         );
 
         if ($link->getId()) {
-            $this->getDb()->update('t_article', $linkData, array('link_id' => $link->getId()));
+            $this->getDb()->update('t_link', $linkData, array('link_id' => $link->getId()));
         } else {
             $this->getDb()->insert('t_link', $linkData);
             $id = $this->getDb()->lastInsertId();

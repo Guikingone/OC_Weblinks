@@ -109,3 +109,4 @@ class User implements UserInterface
         // Nothing to do here
     }
 }
+

@@ -25,7 +25,7 @@ class ApiController {
     }
 
     /**
-     * API article details controller.
+     * API link details controller.
      *
      * @param integer $id Link id
      * @param Application $app Silex application

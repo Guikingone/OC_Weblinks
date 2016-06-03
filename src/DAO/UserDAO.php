@@ -16,7 +16,6 @@ use WebLinks\Domain\User;
 
 class UserDAO extends DAO implements UserProviderInterface
 {
-
     /**
      * Returns a list of all users, sorted by role and name.
      *
@@ -36,18 +35,45 @@ class UserDAO extends DAO implements UserProviderInterface
     }
 
     /**
-     * Return a user matchind the supplied id
-     * @param integer $id the user id
-     * @return \WebLinks\Domain\User | throws an exception if no mathcing user is found
+     * Returns a user matching the supplied id.
+     *
+     * @param integer $id The user id.
+     *
+     * @return \WebLinks\Domain\User|throws an exception if no matching user is found
      */
-    public function find($id)
-    {
-        $sql = "SELECT * FROM t_user WHERE user_id = ?";
-        $row = $this->getDB()->fetchAssoc($sql, array($id));
-        if($row)
+    public function find($id) {
+        $sql = "select * from t_user where user_id=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($id));
+
+        if ($row)
             return $this->buildDomainObject($row);
         else
-            throw new \Exception("No user matching id", $id);
+            throw new \Exception("No user matching id " . $id);
+    }
+
+    /**
+     * Saves a user into the database.
+     *
+     * @param \WebLinks\Domain\User $user The user to save
+     */
+    public function save(User $user) {
+        $userData = array(
+            'user_name' => $user->getUsername(),
+            'user_salt' => $user->getSalt(),
+            'user_password' => $user->getPassword(),
+            'user_role' => $user->getRole()
+        );
+
+        if ($user->getId()) {
+            // The user has already been saved : update it
+            $this->getDb()->update('t_user', $userData, array('user_id' => $user->getId()));
+        } else {
+            // The user has never been saved : insert it
+            $this->getDb()->insert('t_user', $userData);
+            // Get the id of the newly created user and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $user->setId($id);
+        }
     }
 
     /**
@@ -56,51 +82,51 @@ class UserDAO extends DAO implements UserProviderInterface
      * @param integer $id The user id.
      */
     public function delete($id) {
+        // Delete the user
         $this->getDb()->delete('t_user', array('user_id' => $id));
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function loadUserByUsername($username)
     {
-        $sql = "SELECT * FROM t_user WHERE user_name = ?";
-        $row = $this->getDB()->fetchAssoc($sql, array($username));
+        $sql = "select * from t_user where user_name=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($username));
 
-        if($row)
+        if ($row)
             return $this->buildDomainObject($row);
         else
             throw new UsernameNotFoundException(sprintf('User "%s" not found.', $username));
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function refreshUser(UserInterface $user)
     {
         $class = get_class($user);
-        if(!$this->supportsClass($class)){
+        if (!$this->supportsClass($class)) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
         }
         return $this->loadUserByUsername($user->getUsername());
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function supportsClass($class)
     {
-        return 'Weblinks\Domain\User' === $class;
+        return 'WebLinks\Domain\User' === $class;
     }
 
     /**
-     * Create a user object using the a DB row
+     * Creates a User object based on a DB row.
      *
-     * @param array $row the DB row containing User Data
+     * @param array $row The DB row containing User data.
      * @return \WebLinks\Domain\User
      */
-    protected function buildDomainObject($row)
-    {
+    protected function buildDomainObject($row) {
         $user = new User();
         $user->setId($row['user_id']);
         $user->setUsername($row['user_name']);
